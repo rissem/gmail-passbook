@@ -34,5 +34,6 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
+gem "oauth2"
 gem "pg"
 gem 'urbanairship'
