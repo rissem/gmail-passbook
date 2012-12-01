@@ -3,12 +3,14 @@ development:
   encoding: unicode
   database: gmail_passbook_dev
   pool: 5
+  host: localhost
 
 test:
   adapter: postgresql
   encoding: unicode
   database: gmail_passbook_test
   pool: 5
+  host: localhost
 
 #production:
 #  adapter: postgresql
