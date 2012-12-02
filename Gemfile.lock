@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (3.2.9)
       actionpack (= 3.2.9)
       mail (~> 2.4.4)
@@ -40,6 +41,7 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    hashery (2.1.0)
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
@@ -53,6 +55,10 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.19)
     multi_json (1.4.0)
+    pdf-reader (1.2.0)
+      Ascii85 (~> 1.0.0)
+      hashery (~> 2.0)
+      ruby-rc4
     pg (0.14.1)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -80,6 +86,7 @@ GEM
     rake (10.0.2)
     rdoc (3.12)
       json (~> 1.4)
+    ruby-rc4 (0.1.5)
     sass (3.2.3)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -106,6 +113,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   jquery-rails
+  pdf-reader
   pg
   rails (= 3.2.9)
   sass-rails (~> 3.2.3)
