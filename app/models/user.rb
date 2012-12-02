@@ -57,13 +57,14 @@ class User < ActiveRecord::Base
 
       pass = Pass.new
       pass.code = ticket_number
-
+      pass.pk_url = pass_url
+      pass.title = title
+      pass.event_date = time
       pass.email_id = email_id
       pass.user_id = self.id
       pass.sent = false
       pass.save!
     end
-    return message
   end
 
   def self.make_pass parameters
