@@ -8,7 +8,7 @@ GmailPassbook::Application.routes.draw do
 
   match 'pushtoken/:token', to: 'sessions#setPushToken'
   
-#  match '/update_passes/
+  match '/update_passes', to: 'sessions#updatePasses'
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:

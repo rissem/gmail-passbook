@@ -1,3 +1,5 @@
+require "./lib/urban_airship"
+
 class SessionsController < ApplicationController
   def create
     puts "STUFF WE GOT BACK #{auth_hash.to_json}"
@@ -10,6 +12,12 @@ class SessionsController < ApplicationController
     @user.push_token = params[:token]
     @user.save!
     render :json => {success: true}
+  end
+
+  def updatePasses
+    @user = User.where(email: params[:email]).first    
+    push_token = @user.push_token
+    Urban_Airship.send_urban_airship_text_notification(push_token, "Add event [details]", {subject: "yoyoyo"})
   end
 
   protected
