@@ -9,6 +9,12 @@ class SessionsController < ApplicationController
 
   protected
 
+  def setPushToken
+    @user = User.where(email: params[:email]).first
+    @user.push_token = params[:push_token]
+    @user.save!
+  end
+
   def auth_hash
     request.env['omniauth.auth']
   end

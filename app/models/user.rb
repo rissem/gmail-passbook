@@ -3,7 +3,7 @@ require 'mail'
 
 class User < ActiveRecord::Base
   #TODO add refresh token as well
-  attr_accessible :access_token, :email
+  attr_accessible :access_token, :email, :push_token
 
   def self.find_or_create_from_auth_hash(auth_hash)
     email = auth_hash[:info][:email]
