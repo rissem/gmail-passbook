@@ -5,13 +5,14 @@ class SessionsController < ApplicationController
     render :json => {email: @user.email}
   end
 
-  protected
-
   def setPushToken
     @user = User.where(email: params[:email]).first
-    @user.push_token = params[:push_token]
+    @user.push_token = params[:token]
     @user.save!
+    render :json => {success: true}
   end
+
+  protected
 
   def auth_hash
     request.env['omniauth.auth']

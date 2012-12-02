@@ -6,7 +6,7 @@ GmailPassbook::Application.routes.draw do
   match 'inapptest/:token/:text' => 'inapptest#index'
   match '/auth/:provider/callback', to: 'sessions#create'
 
-  match '/push_token/:email/:push_token', to: 'sessions#setPushToken'
+  match 'pushtoken/:token', to: 'sessions#setPushToken'
   
 #  match '/update_passes/
   # Keep in mind you can assign values other than :controller and :action
