@@ -33,4 +33,27 @@ class AttachmentParser
     puts "Found ticketNum #{ticketNum}"
     return ticketNum
   end
+
+  def self.get_event_title (message)
+    subject = message.subject
+    divider = "for " #It's a hackathon, dammit
+    idx = subject.index divider
+    subject = subject[(idx+divider.length)..-1] unless idx.nil?
+    subject
+  end
+
+  def self.find_when (message)
+    when_token = "When: "
+    body = message.text_part.body
+    time = body.split("\n").find do |line|
+      line.strip!
+      !line.index(when_token).nil?
+    end
+    time = time[when_token.length..-1]
+  end
+
+
+
+
+
 end

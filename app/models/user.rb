@@ -43,6 +43,16 @@ class User < ActiveRecord::Base
       message = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
 
       ticket_number = AttachmentParser.parse_attachment(message.attachments.first)
+      title = AttachmentParser.get_event_title message
+      time = AttachmentParser.find_when message
+
+      parameters = {
+        "ticket_number" => ticket_number,
+        "event_name" => title,
+        "time_location" => time,
+      }
+
+
       pass = Pass.new
       pass.code = ticket_number
 
@@ -53,8 +63,6 @@ class User < ActiveRecord::Base
     end
     return message
   end
-
-
 
 
 
