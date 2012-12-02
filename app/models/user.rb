@@ -1,5 +1,6 @@
 require 'gmail_xoauth'
 require 'mail'
+require 'net/http'
 require './lib/pdf_extractor'
 
 class User < ActiveRecord::Base
@@ -52,6 +53,7 @@ class User < ActiveRecord::Base
         "time_location" => time,
       }
 
+      pass_url = make_pass parameters
 
       pass = Pass.new
       pass.code = ticket_number
@@ -62,6 +64,14 @@ class User < ActiveRecord::Base
       pass.save!
     end
     return message
+  end
+
+  def self.make_pass parameters
+    #host = "173.255.243.60:4567"
+    host = "localhost:4567"
+    uri = URI("http://#{host}/v1/passes")
+    res = Net::HTTP.post_form(uri, parameters)
+    return res.body
   end
 
 
