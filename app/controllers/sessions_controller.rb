@@ -1,7 +1,8 @@
 class SessionsController < ApplicationController
   def create
-    puts "STUFF WE GOT BACK #{auth_hash}"
-#    @user = User.find_or_create_from_auth_hash(auth_hash)
+    puts "STUFF WE GOT BACK #{auth_hash.to_json}"
+    
+    @user = User.find_or_create_from_auth_hash(auth_hash)
 #    self.current_user = @user
     redirect_to '/'
   end
