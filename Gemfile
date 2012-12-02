@@ -18,6 +18,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'omniauth'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -37,3 +38,5 @@ gem 'jquery-rails'
 gem "oauth2"
 gem "pg"
 gem 'urbanairship'
+gem 'omniauth-google-oauth2'
+

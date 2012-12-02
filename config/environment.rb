@@ -1,9 +1,9 @@
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 
-GMAIL_CLIENT_ID = "693405860632.apps.googleusercontent.com"
-GMAIL_CLIENT_SECRET="uAzxHylgyqcTUVy-wb2dndrt"
-GMAIL_REDIRECT_URI="http://localhost/oauth2callback"
+GOOGLE_KEY = "693405860632.apps.googleusercontent.com"
+GOOGLE_SECRET="uAzxHylgyqcTUVy-wb2dndrt"
+GMAIL_REDIRECT_URI="http://localhost:3000/oauth2callback"
 
 URBAN_AIRSHIP_APPLICATION_KEY = "Hdlbo53QTlSskShQXHqwsA"
 URBAN_AIRSHIP_SECRET = "zy69iNA4SLapDLy38v9z0w"
