@@ -1,5 +1,6 @@
 require 'gmail_xoauth'
 require 'mail'
+require './lib/pdf_extractor'
 
 class User < ActiveRecord::Base
   #TODO add refresh token as well
@@ -41,9 +42,9 @@ class User < ActiveRecord::Base
       email_id = results.last
       message = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
 
-      attachment = parse_attachment(message.attachments.first)
+      ticket_number = AttachmentParser.parse_attachment(message.attachments.first)
       pass = Pass.new
-      pass.code = attachment.page(1).text[0..20]
+      pass.code = ticket_number
 
       pass.email_id = email_id
       pass.user_id = self.id
@@ -53,35 +54,8 @@ class User < ActiveRecord::Base
     return message
   end
 
-  def parse_attachment(attachment)
-    path = "/tmp/#{(Random.rand * 100000000).to_i}.pdf"
-    File.open(path, "w+b", 0644) {|f| f.write attachment.body.decoded}
-    PDF::Reader.new(path)
-  end
 
 
-  #Ticket number barcodes seem to be encoded like
-  #"\xC3\x8C1290412908123312321~\xC3\x8E"
-  #So we find indices based on these and then extract the number.
-  #starting bytes: \xC3\x8C [195, 140]
-  STARTING_BYTES = "\xC3\x8C"
-  #ending bytes: \x7E\xC3\x8E [126, 195, 142]
-  ENDING_BYTES = "\xC3\x8E"
 
-  def extractPdfInfo(pdfPath)
-    reader = PDF::Reader.new(pdfPath)
-    pageText = reader.page(1).text
-    #puts pageText
-    startIndex = pageText.chars.to_a.find_index(STARTING_BYTES)
-    puts "Found startIndex #{startIndex}"
-    startIndex += 1 #Because we don't want the unicode start char
-    endIndex = pageText.chars.to_a.find_index(ENDING_BYTES)
-    puts "Found endIndex #{endIndex}"
-    endIndex -= 2 #Because we don't want the unicode end char, or terminal '~'
-    ticketNum = pageText[startIndex..endIndex].to_i
-    puts "Found ticketNum #{ticketNum}"
-
-    return { 'ticket_number' => ticketNum }
-  end
 
 end
