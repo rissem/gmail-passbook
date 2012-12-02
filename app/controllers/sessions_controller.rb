@@ -17,7 +17,9 @@ class SessionsController < ApplicationController
   def updatePasses
     @user = User.where(email: params[:email]).first    
     push_token = @user.push_token
-    Urban_Airship.send_urban_airship_text_notification(push_token, "Add event [details]", {subject: "yoyoyo"})
+    pass = @user.add_event_brite_emails
+    Urban_Airship.send_urban_airship_text_notification(push_token, "Add event: #{pass.title}", {title: pass.title, url:pass.pk_url} )
+    render :json => {success: true}
   end
 
   def email

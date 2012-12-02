@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def add_event_brite_emails
-    message = nil
+    pass = nil
     imap_connection do |imap|
       imap.select "[Gmail]/All Mail"
       results = imap.search(["X-GM-RAW", "from:orders@eventbrite.com"])
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
         "time_location" => time,
       }
 
-      pass_url = make_pass parameters
+      pass_url = User.make_pass parameters
 
       pass = Pass.new
       pass.code = ticket_number
@@ -63,14 +63,17 @@ class User < ActiveRecord::Base
       pass.email_id = email_id
       pass.user_id = self.id
       pass.sent = false
+
+      puts "Pass: #{pass.to_json}"
       pass.save!
     end
+    return pass
   end
 
   def self.make_pass parameters
     host = "173.255.243.60:4567"
     #host = "localhost:4567"
-    uri = URI("http://#{host}/v1/passes")
+    uri = URI("http://#{host}/v1/passes/")
     res = Net::HTTP.post_form(uri, parameters)
     return res.body
   end
