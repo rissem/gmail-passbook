@@ -8,17 +8,21 @@ STARTING_BYTES = "\xC3\x8C"
 #ending bytes: \x7E\xC3\x8E [126, 195, 142]
 ENDING_BYTES = "\xC3\x8E"
 
+TICKET_PDF = '../ticket.pdf'
 
-reader = PDF::Reader.new("../ticket.pdf")
-page = reader.page(1)
-pageText = page.text
-puts pageText
-startIndex = pageText.chars.to_a.find_index(STARTING_BYTES)
-puts "Found startIndex #{startIndex}"
-startIndex += 1 #Because we don't want the unicode start char
-endIndex = pageText.chars.to_a.find_index(ENDING_BYTES)
-puts "Found endIndex #{endIndex}"
-endIndex -= 2 #Because we don't want the unicode end char, or terminal '~'
-ticketNum = pageText[startIndex..endIndex].to_i
-puts "Found ticketNum #{ticketNum}"
+def extract(ticketPdf)
+  reader = PDF::Reader.new(ticketPdf)
+  page = reader.page(1)
+  pageText = page.text
+  #puts pageText
+  startIndex = pageText.chars.to_a.find_index(STARTING_BYTES)
+  puts "Found startIndex #{startIndex}"
+  startIndex += 1 #Because we don't want the unicode start char
+  endIndex = pageText.chars.to_a.find_index(ENDING_BYTES)
+  puts "Found endIndex #{endIndex}"
+  endIndex -= 2 #Because we don't want the unicode end char, or terminal '~'
+  ticketNum = pageText[startIndex..endIndex].to_i
+  puts "Found ticketNum #{ticketNum}"
+end
 
+extract(TICKET_PDF)
