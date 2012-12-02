@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202063421) do
+ActiveRecord::Schema.define(:version => 20121202092755) do
 
   create_table "passes", :force => true do |t|
     t.string   "code"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20121202063421) do
     t.string   "access_token"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "push_token"
   end
 
 end
