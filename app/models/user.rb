@@ -1,6 +1,7 @@
 require 'gmail_xoauth'
 
 class User < ActiveRecord::Base
+  #TODO add refresh token as well
   attr_accessible :access_token, :email
 
   def self.find_or_create_from_auth_hash(auth_hash)

@@ -34,4 +34,7 @@ GmailPassbook::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  GOOGLE_KEY = "693405860632.apps.googleusercontent.com"
+  GOOGLE_SECRET="uAzxHylgyqcTUVy-wb2dndrt"
 end
