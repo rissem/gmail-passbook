@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202020214) do
+ActiveRecord::Schema.define(:version => 20121202063421) do
+
+  create_table "passes", :force => true do |t|
+    t.string   "code"
+    t.integer  "email_id"
+    t.string   "pk_url"
+    t.integer  "user_id"
+    t.boolean  "sent"
+    t.string   "info"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email"

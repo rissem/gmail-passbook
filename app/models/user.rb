@@ -38,8 +38,15 @@ class User < ActiveRecord::Base
     imap_connection do |imap|
       imap.select "[Gmail]/All Mail"
       results = imap.search(["X-GM-RAW", "from:orders@eventbrite.com"])
-      result = Mail.new(imap.fetch(results.last, "RFC822").first.attr['RFC822'])
+      email_id = results.last
+      result = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
       puts "first attachment is #{result.attachments.first}"
+      pass = Pass.new
+      pass.code = "CODE"
+      pass.email_id = email_id
+      pass.user_id = self.id
+      pass.sent = false
+      pass.save!
     end
   end
 end
