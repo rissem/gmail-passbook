@@ -34,20 +34,29 @@ class User < ActiveRecord::Base
   end
 
   def add_event_brite_emails
-    result = nil
+    message = nil
     imap_connection do |imap|
       imap.select "[Gmail]/All Mail"
       results = imap.search(["X-GM-RAW", "from:orders@eventbrite.com"])
       email_id = results.last
-      result = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
-      puts "first attachment is #{result.attachments.first}"
+      message = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
+
+      attachment = parse_attachment(message.attachments.first)
       pass = Pass.new
-      pass.code = "CODE"
+      pass.code = attachment.page(1).text[0..20]
+
       pass.email_id = email_id
       pass.user_id = self.id
       pass.sent = false
       pass.save!
     end
+    return message
+  end
+
+  def parse_attachment(attachment)
+    path = "/tmp/#{(Random.rand * 100000000).to_i}.pdf"
+    File.open(path, "w+b", 0644) {|f| f.write attachment.body.decoded}
+    PDF::Reader.new(path)
   end
 
 
