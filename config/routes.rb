@@ -10,6 +10,8 @@ GmailPassbook::Application.routes.draw do
   
   match '/update_passes', to: 'sessions#updatePasses'
 
+  match '/passes', to: 'sessions#passes'
+
   match '/:email', to: 'sessions#email'
   # Keep in mind you can assign values other than :controller and :action
 

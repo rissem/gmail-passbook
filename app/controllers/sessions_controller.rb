@@ -26,6 +26,11 @@ class SessionsController < ApplicationController
     render :json => {success: true}
   end
 
+  def passes
+    @user = User.where(email: params[:email]).first    
+    render :json => Pass.where(user_id: @user.id)
+  end
+
   protected
 
   def auth_hash
