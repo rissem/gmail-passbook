@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (3.2.9)
       actionpack (= 3.2.9)
       mail (~> 2.4.4)
@@ -42,6 +43,7 @@ GEM
       multi_json (~> 1.0)
     faraday (0.8.4)
       multipart-post (~> 1.1)
+    hashery (2.1.0)
     hashie (1.2.0)
     hike (1.2.1)
     httpauth (0.2.0)
@@ -75,6 +77,10 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    pdf-reader (1.2.0)
+      Ascii85 (~> 1.0.0)
+      hashery (~> 2.0)
+      ruby-rc4
     pg (0.14.1)
     polyglot (0.3.3)
     rack (1.4.1)
@@ -102,6 +108,7 @@ GEM
     rake (10.0.2)
     rdoc (3.12)
       json (~> 1.4)
+    ruby-rc4 (0.1.5)
     sass (3.2.3)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -133,6 +140,7 @@ DEPENDENCIES
   oauth2
   omniauth
   omniauth-google-oauth2
+  pdf-reader
   pg
   rails (= 3.2.9)
   sass-rails (~> 3.2.3)
