@@ -40,4 +40,5 @@ gem 'urbanairship'
 gem 'omniauth-google-oauth2'
 gem 'omniauth'
 gem 'pdf-reader'
+gem 'gmail_xoauth'
 

@@ -43,6 +43,8 @@ GEM
       multi_json (~> 1.0)
     faraday (0.8.4)
       multipart-post (~> 1.1)
+    gmail_xoauth (0.4.1)
+      oauth (>= 0.3.6)
     hashery (2.1.0)
     hashie (1.2.0)
     hike (1.2.1)
@@ -62,6 +64,7 @@ GEM
     mime-types (1.19)
     multi_json (1.4.0)
     multipart-post (1.1.5)
+    oauth (0.4.7)
     oauth2 (0.8.0)
       faraday (~> 0.8)
       httpauth (~> 0.1)
@@ -136,6 +139,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  gmail_xoauth
   jquery-rails
   oauth2
   omniauth

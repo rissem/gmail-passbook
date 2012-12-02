@@ -1,3 +1,5 @@
+require 'gmail_xoauth'
+
 class User < ActiveRecord::Base
   attr_accessible :access_token, :email
 
@@ -13,5 +15,12 @@ class User < ActiveRecord::Base
       user.save!
     end
     return user
+  end
+
+  def email_count
+    imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
+    imap.authenticate('XOAUTH2', email, access_token)
+    messages_count = imap.status('INBOX', ['MESSAGES'])['MESSAGES']
+    puts "Seeing #{messages_count} messages in INBOX"
   end
 end
