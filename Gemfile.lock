@@ -141,6 +141,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   gmail_xoauth
   jquery-rails
+  mail
   oauth2
   omniauth
   omniauth-google-oauth2

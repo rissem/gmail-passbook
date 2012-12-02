@@ -1,4 +1,5 @@
 require 'gmail_xoauth'
+require 'mail'
 
 class User < ActiveRecord::Base
   #TODO add refresh token as well
@@ -18,10 +19,27 @@ class User < ActiveRecord::Base
     return user
   end
 
-  def email_count
+  def imap_connection
     imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
     imap.authenticate('XOAUTH2', email, access_token)
-    messages_count = imap.status('INBOX', ['MESSAGES'])['MESSAGES']
-    puts "Seeing #{messages_count} messages in INBOX"
+    yield imap
+    imap.logout
+  end
+
+  def email_count
+    imap_connection do |imap|
+      messages_count = imap.status('INBOX', ['MESSAGES'])['MESSAGES']
+      puts "Seeing #{messages_count} messages in INBOX"
+    end
+  end
+
+  def add_event_brite_emails
+    result = nil
+    imap_connection do |imap|
+      imap.select "[Gmail]/All Mail"
+      results = imap.search(["X-GM-RAW", "from:orders@eventbrite.com"])
+      result = Mail.new(imap.fetch(results.last, "RFC822").first.attr['RFC822'])
+      puts "first attachment is #{result.attachments.first}"
+    end
   end
 end
