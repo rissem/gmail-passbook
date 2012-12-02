@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   def create
     puts "STUFF WE GOT BACK #{auth_hash.to_json}"
     @user = User.find_or_create_from_auth_hash(auth_hash)
-    render :json => {email: @user.email}
+    redirect_to "/#{@user.email}"
   end
 
   def setPushToken
@@ -18,6 +18,10 @@ class SessionsController < ApplicationController
     @user = User.where(email: params[:email]).first    
     push_token = @user.push_token
     Urban_Airship.send_urban_airship_text_notification(push_token, "Add event [details]", {subject: "yoyoyo"})
+  end
+
+  def email
+    render :json => {success: true}
   end
 
   protected
