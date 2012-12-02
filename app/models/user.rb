@@ -67,8 +67,8 @@ class User < ActiveRecord::Base
   end
 
   def self.make_pass parameters
-    #host = "173.255.243.60:4567"
-    host = "localhost:4567"
+    host = "173.255.243.60:4567"
+    #host = "localhost:4567"
     uri = URI("http://#{host}/v1/passes")
     res = Net::HTTP.post_form(uri, parameters)
     return res.body
