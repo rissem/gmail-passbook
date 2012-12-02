@@ -1,17 +1,30 @@
+require "./lib/urban_airship"
+
 class SessionsController < ApplicationController
   def create
     puts "STUFF WE GOT BACK #{auth_hash.to_json}"
     @user = User.find_or_create_from_auth_hash(auth_hash)
-    render :json => {email: @user.email}
+    redirect_to "/#{@user.email}"
   end
-
-  protected
 
   def setPushToken
     @user = User.where(email: params[:email]).first
-    @user.push_token = params[:push_token]
+    @user.push_token = params[:token]
     @user.save!
+    render :json => {success: true}
   end
+
+  def updatePasses
+    @user = User.where(email: params[:email]).first    
+    push_token = @user.push_token
+    Urban_Airship.send_urban_airship_text_notification(push_token, "Add event [details]", {subject: "yoyoyo"})
+  end
+
+  def email
+    render :json => {success: true}
+  end
+
+  protected
 
   def auth_hash
     request.env['omniauth.auth']
