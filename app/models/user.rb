@@ -5,9 +5,10 @@ require './lib/pdf_extractor'
 
 class User < ActiveRecord::Base
   #TODO add refresh token as well
-  attr_accessible :access_token, :email, :push_token
+  attr_accessible :access_token, :email, :push_token, :refresh_token
 
   def self.find_or_create_from_auth_hash(auth_hash)
+    puts "auth_hash = #{auth_hash}.inspect"
     email = auth_hash[:info][:email]
     access_token = auth_hash[:credentials][:token]
     puts "email #{email}, token #{access_token}"
@@ -16,6 +17,7 @@ class User < ActiveRecord::Base
       user = User.new
       user.email = email
       user.access_token = access_token
+      user.refresh_token = 
       user.save!
     end
     return user
