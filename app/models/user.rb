@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     pass = nil
     imap_connection do |imap|
       imap.select "[Gmail]/All Mail"
-      results = imap.search(["X-GM-RAW", "from:orders@eventbrite.com"])
+      results = imap.search(["X-GM-RAW", "orders@eventbrite.com"])
       email_id = results.last
       message = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
 
