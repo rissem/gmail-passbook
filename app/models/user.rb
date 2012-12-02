@@ -1,5 +1,6 @@
 require 'gmail_xoauth'
 require 'mail'
+require 'json'
 require 'net/http'
 require './lib/pdf_extractor'
 
@@ -37,38 +38,43 @@ class User < ActiveRecord::Base
     end
   end
 
-  def add_event_brite_emails
-    pass = nil
+  def get_event_brite_email
+    email_id, message = nil
     imap_connection do |imap|
       imap.select "[Gmail]/All Mail"
       results = imap.search(["X-GM-RAW", "orders@eventbrite.com"])
       email_id = results.last
       message = Mail.new(imap.fetch(email_id, "RFC822").first.attr['RFC822'])
-
-      ticket_number = AttachmentParser.parse_attachment(message.attachments.first)
-      title = AttachmentParser.get_event_title message
-      time = AttachmentParser.find_when message
-
-      parameters = {
-        "ticket_number" => ticket_number,
-        "event_name" => title,
-        "time_location" => time,
-      }
-
-      pass_url = User.make_pass parameters
-
-      pass = Pass.new
-      pass.code = ticket_number
-      pass.pk_url = pass_url
-      pass.title = title
-      pass.event_date = time
-      pass.email_id = email_id
-      pass.user_id = self.id
-      pass.sent = false
-
-      puts "Pass: #{pass.to_json}"
-      pass.save!
     end
+    [email_id, message]
+  end
+
+
+  def add_event_brite_emails
+    email_id, message = get_event_brite_email
+    ticket_number = AttachmentParser.parse_attachment(message.attachments.first)
+    title = AttachmentParser.get_event_title message
+    time = AttachmentParser.find_when message
+
+    parameters = {
+      "ticket_number" => ticket_number,
+      "event_name" => title,
+      "time_location" => time,
+    }
+
+    pass_url = User.make_pass parameters
+
+    pass = Pass.new
+    pass.code = ticket_number
+    pass.pk_url = pass_url
+    pass.title = title
+    pass.event_date = time
+    pass.email_id = email_id
+    pass.user_id = self.id
+    pass.sent = false
+
+    puts "Pass: #{pass.to_json}"
+    pass.save!
     return pass
   end
 
@@ -77,6 +83,7 @@ class User < ActiveRecord::Base
     #host = "localhost:4567"
     uri = URI("http://#{host}/v1/passes/")
     res = Net::HTTP.post_form(uri, parameters)
+
     return res.body
   end
 

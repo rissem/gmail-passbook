@@ -43,13 +43,13 @@ class AttachmentParser
   end
 
   def self.find_when (message)
-    when_token = "When: "
+    when_token = "When:"
     body = message.text_part.body
     time = body.to_s.split("\n").find do |line|
       line.strip!
       !line.index(when_token).nil?
     end
-    time = time[when_token.length..-1]
+    time = time[when_token.length..-1] if time
   end
 
 
