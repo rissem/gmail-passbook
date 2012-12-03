@@ -11,8 +11,10 @@ scrapes the messages and their PDF attachments, calls the passbook server to mak
 sends a push message to the client with the passbook entry info.
 
 Part 1 is the iOS app: https://github.com/braddgriffith/willie-mayes-hayes
+
 Part 3 is the Passbook server: https://github.com/jagill/angelhack-pass-server
 
 All code is extremely hacky, written in 24 hours with no sleep and way too much caffeine.
+
 Team: @jagill, @rissem, @braddgriffith, Kevin Gibbon
 
