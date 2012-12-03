@@ -16,5 +16,5 @@ Part 3 is the Passbook server: https://github.com/jagill/angelhack-pass-server
 
 All code is extremely hacky, written in 24 hours with no sleep and way too much caffeine.
 
-Team: @jagill, @rissem, @braddgriffith, Kevin Gibbon
+Team: @jagill, @rissem, @braddgriffith, @kevingibbon
 
